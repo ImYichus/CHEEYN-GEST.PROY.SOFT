@@ -43,25 +43,25 @@ export default function SignupPage() {
   };
 
   return (
-    // Fondo claro usando Light Orange (#F9DBBD)
-    <div className="flex justify-center items-center min-h-screen bg-[#F9DBBD]"> 
+    // Fondo claro usando Verde Claro (#d8f3dc)
+    <div className="flex justify-center items-center min-h-screen bg-[#d8f3dc]"> 
       <div className="p-8 bg-white shadow-2xl rounded-lg w-full max-w-lg">
-        {/* Título usando Chocolate Cosmos (#450920) */}
-        <h1 className="text-3xl font-bold mb-6 text-center text-[#450920]">
+        {/* Título usando Verde Oscuro (#1e5128) */}
+        <h1 className="text-3xl font-bold mb-6 text-center text-[#1e5128]">
           Crea tu Cuenta Cheeyn
         </h1>
         
         {/* Mensajes de Alerta y Éxito */}
         {error && <p className="mb-4 p-3 bg-red-100 text-red-700 border border-red-300 rounded">{error}</p>}
-        {/* Usando Salmon Pink para el éxito (#FFA5AB) */}
-        {success && <p className="mb-4 p-3 bg-[#fdf2f2] text-[#A53860] border border-[#FFA5AB] rounded">{success}</p>}
+        {/* Usando Verde Claro para el éxito */}
+        {success && <p className="mb-4 p-3 bg-[#f1f9f4] text-[#4e9f3d] border border-[#95d5b2] rounded">{success}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           
           {/* Nombre Completo */}
           <div>
-            {/* Etiquetas usando Chocolate Cosmos (#450920) */}
-            <label className="block text-sm font-medium text-[#450920]" htmlFor="name">Nombre Completo</label>
+            {/* Etiquetas usando Verde Oscuro (#1e5128) */}
+            <label className="block text-sm font-medium text-[#1e5128]" htmlFor="name">Nombre Completo</label>
             <input
               id="name"
               type="text"
@@ -69,8 +69,8 @@ export default function SignupPage() {
               value={formData.name}
               onChange={handleChange}
               required
-              // Foco del input usando Raspberry Rose (#A53860)
-              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#A53860] focus:border-[#A53860]"
+              // Foco del input usando Verde Medio (#4e9f3d)
+              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#4e9f3d] focus:border-[#4e9f3d]"
             />
           </div>
 
@@ -78,7 +78,7 @@ export default function SignupPage() {
           
           {/* Correo Electrónico */}
           <div>
-            <label className="block text-sm font-medium text-[#450920]" htmlFor="email">Correo Electrónico</label>
+            <label className="block text-sm font-medium text-[#1e5128]" htmlFor="email">Correo Electrónico</label>
             <input
               id="email"
               type="email"
@@ -86,13 +86,13 @@ export default function SignupPage() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#A53860] focus:border-[#A53860]"
+              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#4e9f3d] focus:border-[#4e9f3d]"
             />
           </div>
 
           {/* Contraseña */}
           <div>
-            <label className="block text-sm font-medium text-[#450920]" htmlFor="password">Contraseña (Mín. 6 caracteres)</label>
+            <label className="block text-sm font-medium text-[#1e5128]" htmlFor="password">Contraseña (Mín. 6 caracteres)</label>
             <input
               id="password"
               type="password"
@@ -100,13 +100,13 @@ export default function SignupPage() {
               value={formData.password}
               onChange={handleChange}
               required
-              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#A53860] focus:border-[#A53860]"
+              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#4e9f3d] focus:border-[#4e9f3d]"
             />
           </div>
 
           {/* Teléfono */}
           <div>
-            <label className="block text-sm font-medium text-[#450920]" htmlFor="phone">Teléfono</label>
+            <label className="block text-sm font-medium text-[#1e5128]" htmlFor="phone">Teléfono</label>
             <input
               id="phone"
               type="tel"
@@ -114,13 +114,13 @@ export default function SignupPage() {
               value={formData.phone}
               onChange={handleChange}
               required
-              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#A53860] focus:border-[#A53860]"
+              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#4e9f3d] focus:border-[#4e9f3d]"
             />
           </div>
           
           {/* Dirección */}
           <div>
-            <label className="block text-sm font-medium text-[#450920]" htmlFor="address">Dirección de Envío (Calle y Número)</label>
+            <label className="block text-sm font-medium text-[#1e5128]" htmlFor="address">Dirección de Envío (Calle y Número)</label>
             <input
               id="address"
               type="text"
@@ -128,22 +128,22 @@ export default function SignupPage() {
               value={formData.address}
               onChange={handleChange}
               required
-              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#A53860] focus:border-[#A53860]"
+              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#4e9f3d] focus:border-[#4e9f3d]"
             />
           </div>
 
 
-          {/* Botón de Registro con Raspberry Rose (#A53860) y hover más oscuro */}
+          {/* Botón de Registro con Verde Medio (#4e9f3d) y hover más oscuro */}
           <button
             type="submit"
-            className="w-full py-3 px-4 border border-transparent rounded-md shadow-lg text-lg font-semibold text-white bg-[#A53860] hover:bg-[#913052] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#A53860] transition duration-150 ease-in-out mt-6"
+            className="w-full py-3 px-4 border border-transparent rounded-md shadow-lg text-lg font-semibold text-white bg-[#4e9f3d] hover:bg-[#3d8130] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4e9f3d] transition duration-150 ease-in-out mt-6"
           >
             Crear Cuenta Cheeyn
           </button>
         </form>
 
         <p className="mt-6 text-center text-sm text-gray-600">
-          ¿Ya tienes cuenta? <a href="/login" className="font-medium text-[#A53860] hover:text-[#450920]">Inicia sesión</a>
+          ¿Ya tienes cuenta? <a href="/login" className="font-medium text-[#4e9f3d] hover:text-[#1e5128]">Inicia sesión</a>
         </p>
       </div>
     </div>

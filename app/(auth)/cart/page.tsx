@@ -36,18 +36,18 @@ export default function CartPage() {
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-[#F9DBBD] flex flex-col"> {/* AÑADIDO: flex flex-col */}
+    <div className="min-h-screen bg-[#d8f3dc] flex flex-col"> {/* AÑADIDO: flex flex-col */}
       {/* Header */}
-      <header className="bg-[#450920] shadow-xl py-4 sticky top-0 z-50"> 
+      <header className="bg-[#1e5128] shadow-xl py-4 sticky top-0 z-50"> 
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <Link href="/" className="text-3xl font-bold text-[#F9DBBD] tracking-widest"> {/* Letra más espaciada */}
+          <Link href="/" className="text-3xl font-bold text-[#d8f3dc] tracking-widest"> {/* Letra más espaciada */}
             CHEEYN
           </Link>
           <nav>
-            <Link href="/products" className="text-[#F9DBBD] hover:text-[#A53860] ml-6 font-medium transition-colors">
+            <Link href="/products" className="text-[#d8f3dc] hover:text-[#95d5b2] ml-6 font-medium transition-colors">
               Catalogo
             </Link>
-            <Link href="/login" className="text-[#F9DBBD] hover:text-[#A53860] ml-6 font-medium transition-colors">
+            <Link href="/login" className="text-[#d8f3dc] hover:text-[#95d5b2] ml-6 font-medium transition-colors">
               Login
             </Link>
           </nav>
@@ -55,14 +55,14 @@ export default function CartPage() {
       </header>
 
       <main className="container mx-auto px-4 py-8 flex-grow"> {/* AÑADIDO: flex-grow */}
-        <h1 className="text-4xl font-extrabold text-[#450920] mb-8 text-center">
+        <h1 className="text-4xl font-extrabold text-[#1e5128] mb-8 text-center">
           Tu Carrito Cheeyn ({totalItems})
         </h1>
 
         {cartItems.length === 0 ? (
           <div className="text-center p-8 bg-white rounded-lg shadow-md">
-            <p className="text-xl text-[#450920] mb-4">Tu carrito está vacío.</p>
-            <Link href="/products" className="text-[#A53860] hover:underline font-medium">
+            <p className="text-xl text-[#1e5128] mb-4">Tu carrito está vacío.</p>
+            <Link href="/products" className="text-[#4e9f3d] hover:underline font-medium">
               Explora nuestros productos
             </Link>
           </div>
@@ -82,7 +82,7 @@ export default function CartPage() {
                     />
                   </div>
                   <div className="flex-grow">
-                    <h2 className="text-xl font-semibold text-[#450920]">{item.name}</h2>
+                    <h2 className="text-xl font-semibold text-[#1e5128]">{item.name}</h2>
                     <p className="text-gray-600">${item.price.toFixed(2)} c/u</p>
                     <div className="flex items-center mt-2">
                       <button
@@ -91,7 +91,7 @@ export default function CartPage() {
                       >
                         -
                       </button>
-                      <span className="mx-3 text-lg text-[#450920]">{item.quantity}</span>
+                      <span className="mx-3 text-lg text-[#1e5128]">{item.quantity}</span>
                       <button
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
                         className="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
@@ -106,7 +106,7 @@ export default function CartPage() {
                       </button>
                     </div>
                   </div>
-                  <div className="text-xl font-bold text-[#A53860] ml-4">
+                  <div className="text-xl font-bold text-[#4e9f3d] ml-4">
                     ${(item.price * item.quantity).toFixed(2)}
                   </div>
                 </div>
@@ -115,20 +115,20 @@ export default function CartPage() {
 
             {/* Resumen del Carrito */}
             <div className="lg:w-1/3 bg-white p-6 rounded-lg shadow-md mt-8 lg:mt-0">
-              <h2 className="text-2xl font-bold text-[#450920] mb-4 border-b pb-3">Resumen del Pedido</h2>
+              <h2 className="text-2xl font-bold text-[#1e5128] mb-4 border-b pb-3">Resumen del Pedido</h2>
               <div className="flex justify-between text-lg mb-2">
-                <span className="text-[#450920]">Subtotal:</span>
-                <span className="font-semibold text-[#450920]">${subtotal.toFixed(2)}</span>
+                <span className="text-[#1e5128]">Subtotal:</span>
+                <span className="font-semibold text-[#1e5128]">${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-lg mb-4">
-                <span className="text-[#450920]">Envío:</span>
-                <span className="font-semibold text-[#450920]">Gratis</span> {/* Placeholder */}
+                <span className="text-[#1e5128]">Envío:</span>
+                <span className="font-semibold text-[#1e5128]">Gratis</span> {/* Placeholder */}
               </div>
-              <div className="flex justify-between text-2xl font-bold text-[#A53860] border-t pt-4 mt-4">
+              <div className="flex justify-between text-2xl font-bold text-[#4e9f3d] border-t pt-4 mt-4">
                 <span>Total:</span>
                 <span>${subtotal.toFixed(2)}</span>
               </div>
-              <button className="mt-6 w-full py-3 px-4 bg-[#A53860] text-white rounded-md hover:bg-[#913052] transition-colors duration-200 text-lg font-semibold">
+              <button className="mt-6 w-full py-3 px-4 bg-[#4e9f3d] text-white rounded-md hover:bg-[#3d8130] transition-colors duration-200 text-lg font-semibold">
                 Proceder al Pago
               </button>
             </div>
@@ -137,7 +137,7 @@ export default function CartPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#450920] text-[#F9DBBD] py-6 mt-auto"> {/* AÑADIDO: mt-auto */}
+      <footer className="bg-[#1e5128] text-[#d8f3dc] py-6 mt-auto"> {/* AÑADIDO: mt-auto */}
         <div className="container mx-auto text-center text-sm">
           © {new Date().getFullYear()} Cheeyn. Todos los derechos reservados.
         </div>

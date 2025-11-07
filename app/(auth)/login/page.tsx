@@ -28,11 +28,11 @@ export default function LoginPage() {
   return (
     // Asegúrate de que este sea el primer elemento después de 'return ('
     // El comentario de una sola línea de JS (//) funciona bien aquí si está fuera del JSX.
-    <div className="flex justify-center items-center min-h-screen bg-[#F9DBBD]">
+    <div className="flex justify-center items-center min-h-screen bg-[#d8f3dc]">
       <div className="p-8 bg-white shadow-2xl rounded-lg w-full max-w-md">
         
-        {/* Título usando Chocolate Cosmos (#450920) */}
-        <h1 className="text-3xl font-bold mb-6 text-center text-[#450920]">
+        {/* Título usando Verde Oscuro (#1e5128) */}
+        <h1 className="text-3xl font-bold mb-6 text-center text-[#1e5128]">
             Iniciar Sesión
         </h1>
         
@@ -43,34 +43,34 @@ export default function LoginPage() {
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            {/* Etiquetas usando Chocolate Cosmos (#450920) */}
-            <label className="block text-sm font-medium text-[#450920]" htmlFor="email">Correo Electrónico</label>
+            {/* Etiquetas usando Verde Oscuro (#1e5128) */}
+            <label className="block text-sm font-medium text-[#1e5128]" htmlFor="email">Correo Electrónico</label>
             <input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              // Foco del input usando Raspberry Rose (#A53860)
-              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#A53860] focus:border-[#A53860]"
+              // Foco del input usando Verde Medio (#4e9f3d)
+              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#4e9f3d] focus:border-[#4e9f3d]"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-[#450920]" htmlFor="password">Contraseña</label>
+            <label className="block text-sm font-medium text-[#1e5128]" htmlFor="password">Contraseña</label>
             <input
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#A53860] focus:border-[#A53860]"
+              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-[#4e9f3d] focus:border-[#4e9f3d]"
             />
           </div>
           
-          {/* Botón de Login con Raspberry Rose (#A53860) */}
+          {/* Botón de Login con Verde Medio (#4e9f3d) */}
           <button
             type="submit"
-            className="w-full py-3 px-4 border border-transparent rounded-md shadow-lg text-lg font-semibold text-white bg-[#A53860] hover:bg-[#913052] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#A53860] transition duration-150 ease-in-out mt-6"
+            className="w-full py-3 px-4 border border-transparent rounded-md shadow-lg text-lg font-semibold text-white bg-[#4e9f3d] hover:bg-[#3d8130] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4e9f3d] transition duration-150 ease-in-out mt-6"
           >
             Entrar a Cheeyn
           </button>
@@ -78,8 +78,8 @@ export default function LoginPage() {
         
         <p className="mt-6 text-center text-sm text-gray-600">
           ¿No tienes cuenta? 
-          {/* Enlace de Registro con Raspberry Rose (#A53860) */}
-          <a href="/signup" className="font-medium text-[#A53860] hover:text-[#450920]">Regístrate aquí</a>
+          {/* Enlace de Registro con Verde Medio (#4e9f3d) */}
+          <a href="/signup" className="font-medium text-[#4e9f3d] hover:text-[#1e5128]">Regístrate aquí</a>
         </p>
       </div>
     </div>

@@ -53,13 +53,13 @@ function ProductCard({ id, name, price, imageUrl }: ProductProps) {
         
         {/* CONTENIDO */}
         <div className="p-3 text-center flex flex-col flex-grow justify-between">
-          <h3 className="text-sm font-bold text-[#450920] mb-1 group-hover:text-[#A53860] tracking-wider">
+          <h3 className="text-sm font-bold text-[#1e5128] mb-1 group-hover:text-[#4e9f3d] tracking-wider">
             {name}
           </h3>
-          <p className="text-lg font-extrabold text-[#A53860] mt-1">
+          <p className="text-lg font-extrabold text-[#4e9f3d] mt-1">
             ${price.toFixed(2)}
           </p>
-          <button className="mt-2 w-full py-1.5 px-3 bg-[#A53860] text-white rounded-md hover:bg-[#913052] transition-colors duration-200 text-xs">
+          <button className="mt-2 w-full py-1.5 px-3 bg-[#4e9f3d] text-white rounded-md hover:bg-[#3d8130] transition-colors duration-200 text-xs">
             Añadir
           </button>
         </div>
@@ -133,20 +133,20 @@ export default function ProductsPage() {
   };
   
   return (
-    <div className="min-h-screen bg-[#F9DBBD] flex flex-col font-serif">
+    <div className="min-h-screen bg-[#d8f3dc] flex flex-col font-serif">
       
-      {/* 1. HEADER (BANNER) - Fondo #450920, Letras #F9DBBD */}
-      <header className="bg-[#450920] shadow-xl py-4 sticky top-0 z-50"> 
+      {/* 1. HEADER (BANNER) - Fondo verde oscuro, Letras claras */}
+      <header className="bg-[#1e5128] shadow-xl py-4 sticky top-0 z-50"> 
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <Link href="/" className="text-3xl font-bold text-[#F9DBBD] tracking-widest">
+          <Link href="/" className="text-3xl font-bold text-[#d8f3dc] tracking-widest">
             CHEEYN
           </Link>
           <nav>
             {/* Se corrigió el cálculo del carrito, aunque no está implementado */}
-            <Link href="/cart" className="text-[#F9DBBD] hover:text-[#A53860] ml-6 font-medium transition-colors">
+            <Link href="/cart" className="text-[#d8f3dc] hover:text-[#95d5b2] ml-6 font-medium transition-colors">
               Carrito 
             </Link>
-            <Link href="/login" className="text-[#F9DBBD] hover:text-[#A53860] ml-6 font-medium transition-colors">
+            <Link href="/login" className="text-[#d8f3dc] hover:text-[#95d5b2] ml-6 font-medium transition-colors">
               Login
             </Link>
           </nav>
@@ -154,11 +154,11 @@ export default function ProductsPage() {
       </header>
 
       <main className="container mx-auto px-4 py-8 flex-grow">
-        <h1 className="text-5xl font-extrabold text-[#450920] mb-10 text-center leading-tight tracking-wider">
+        <h1 className="text-5xl font-extrabold text-[#1e5128] mb-10 text-center leading-tight tracking-wider">
           Descubre la Elegancia de Cheeyn
         </h1>
         
-        {/* BUSCADOR - Background Blanco y Letras Chocolate Cosmos */}
+        {/* BUSCADOR - Background Blanco y Letras Verde */}
         <form onSubmit={handleSearchSubmit} className="max-w-4xl mx-auto mb-10">
           <div className="relative">
             <input
@@ -166,8 +166,7 @@ export default function ProductsPage() {
               placeholder="Buscar productos por nombre o descripción..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              // text-[#450920] para las letras del buscador
-              className="w-full p-4 pl-12 border-2 border-[#A53860] rounded-full shadow-lg focus:outline-none focus:border-[#450920] transition-colors bg-white text-[#450920]"
+              className="w-full p-4 pl-12 border-2 border-[#4e9f3d] rounded-full shadow-lg focus:outline-none focus:border-[#1e5128] transition-colors bg-white text-[#1e5128]"
             />
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           </div>
@@ -177,7 +176,7 @@ export default function ProductsPage() {
           
           {/* BARRA DE FILTRADO (IZQUIERDA) - Fijo con 'sticky top-24' */}
           <aside className="lg:w-1/4 bg-white p-6 rounded-xl shadow-xl h-fit sticky self-start"> 
-            <h2 className="text-2xl font-bold text-[#450920] mb-5 border-b pb-3 border-gray-200 tracking-wide">
+            <h2 className="text-2xl font-bold text-[#1e5128] mb-5 border-b pb-3 border-gray-200 tracking-wide">
                 Categorías
             </h2>
             <nav className="space-y-2">
@@ -187,8 +186,8 @@ export default function ProductsPage() {
                   onClick={() => handleCategoryClick(category)}
                   className={`block w-full text-left py-2 px-3 rounded-lg transition-all text-base ${
                     selectedCategory === category
-                      ? 'bg-[#A53860] text-white font-semibold shadow-md'
-                      : 'text-[#450920] hover:bg-[#F9DBBD]'
+                      ? 'bg-[#4e9f3d] text-white font-semibold shadow-md'
+                      : 'text-[#1e5128] hover:bg-[#d8f3dc]'
                   }`}
                 >
                   {category}
@@ -202,7 +201,7 @@ export default function ProductsPage() {
             
             {currentProducts.length === 0 ? (
                 <div className="text-center p-12 bg-white rounded-lg shadow-md">
-                    <p className="text-2xl text-[#450920] mb-2 font-serif">No se encontraron productos.</p>
+                    <p className="text-2xl text-[#1e5128] mb-2 font-serif">No se encontraron productos.</p>
                     <p className="text-gray-600">Intenta ajustar tu búsqueda o filtro.</p>
                 </div>
             ) : (
@@ -219,19 +218,19 @@ export default function ProductsPage() {
                         <button
                           onClick={() => handlePageChange(currentPage - 1)}
                           disabled={currentPage === 1}
-                          className="p-2 border rounded-full bg-white text-[#A53860] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#F9DBBD] transition shadow-md"
+                          className="p-2 border rounded-full bg-white text-[#4e9f3d] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#d8f3dc] transition shadow-md"
                         >
                           <ChevronLeft className="w-5 h-5" />
                         </button>
 
-                        <span className="text-lg font-semibold text-[#450920] font-serif">
+                        <span className="text-lg font-semibold text-[#1e5128] font-serif">
                           Página {currentPage} de {totalPages}
                         </span>
 
                         <button
                           onClick={() => handlePageChange(currentPage + 1)}
                           disabled={currentPage === totalPages}
-                          className="p-2 border rounded-full bg-white text-[#A53860] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#F9DBBD] transition shadow-md"
+                          className="p-2 border rounded-full bg-white text-[#4e9f3d] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#d8f3dc] transition shadow-md"
                         >
                           <ChevronRight className="w-5 h-5" />
                         </button>
@@ -245,7 +244,7 @@ export default function ProductsPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#450920] text-[#F9DBBD] py-6 mt-auto">
+      <footer className="bg-[#1e5128] text-[#d8f3dc] py-6 mt-auto">
         <div className="container mx-auto text-center text-sm font-serif">
           © {new Date().getFullYear()} Cheeyn. Todos los derechos reservados.
         </div>
