@@ -13,3 +13,93 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+//Usuarios (Clientes y Administradores)
+model Usuario {
+  id              Int            @id @default(autoincrement())
+  nombre          String
+  email           String         @unique
+  passwordHash    String
+  rol             RolUsuario     @default(CLIENTE)
+  direccionEnvio  String?        //Dirección principal por defecto
+  createdAt       DateTime       @default(now())
+
+  // Relaciones
+  pedidos         Pedido[]
+}
+
+//Categorías de Productos
+model Categoria {
+  id              Int            @id @default(autoincrement())
+  nombre          String         @unique
+  descripcion     String?
+
+  //Relaciones
+  productos       Producto[]
+}
+
+//Productos (Ej: Camiseta, Pantalón)
+model Producto {
+  id              Int            @id @default(autoincrement())
+  nombre          String
+  descripcion     String?
+  precio          Decimal        @db.Decimal(65, 2) //Precio base
+  sku             String         @unique            //Stock Keeping Unit
+  imagenUrl       String?
+
+  //Clave Foránea a Categoria
+  categoriaId     Int
+  categoria       Categoria      @relation(fields: [categoriaId], references: [id])
+
+  //Relaciones
+  variantes       VarianteProducto[] //Una camiseta puede tener muchas variantes (talla S, color azul; talla M, color rojo, etc.)
+}
+
+//Variante de Producto (Donde se gestiona el inventario por Talla/Color)
+model VarianteProducto {
+  id              Int            @id @default(autoincrement())
+  talla           String
+  color           String
+  stock           Int            @default(0)
+
+  //Clave Foránea a Producto
+  productoId      Int
+  producto        Producto       @relation(fields: [productoId], references: [id])
+
+  //Relaciones
+  itemsPedido     DetallePedido[]
+
+  //Restricción única para asegurar que un producto no tenga dos veces la misma combinación de talla/color
+  @@unique([productoId, talla, color])
+}
+
+//Pedidos de Clientes
+model Pedido {
+  id              Int            @id @default(autoincrement())
+  fechaPedido     DateTime       @default(now())
+  estado          EstadoPedido   @default(PENDIENTE)
+  total           Decimal        @db.Decimal(65, 2)
+  direccionEnvio  String         // Dirección usada para este pedido específico
+
+  //Clave Foránea a Usuario
+  usuarioId       Int
+  usuario         Usuario        @relation(fields: [usuarioId], references: [id])
+
+  //Relaciones
+  detalles        DetallePedido[]
+}
+
+//Detalle del Pedido (Artículos dentro de un pedido)
+model DetallePedido {
+  id              Int            @id @default(autoincrement())
+  cantidad        Int
+  precioUnitario  Decimal        @db.Decimal(65, 2) // Precio al momento de la venta
+
+  //Clave Foránea a Pedido
+  pedidoId        Int
+  pedido          Pedido         @relation(fields: [pedidoId], references: [id])
+
+  //Clave Foránea a VarianteProducto
+  varianteId      Int
+  variante        VarianteProducto @relation(fields: [varianteId], references: [id])
+}
