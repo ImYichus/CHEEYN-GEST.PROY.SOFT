@@ -73,6 +73,20 @@ model VarianteProducto {
   @@unique([productoId, talla, color])
 }
 
+//MultimediaProducto (Imágenes y Videos)
+model MultimediaProducto {
+  id              Int            @id @default(autoincrement())
+  productoId      Int
+  url             String         // URL del archivo multimedia (Cloudinary, S3, etc.)
+  esImagen        Boolean        @default(true) // Indica si es imagen (true) o video (false)
+  orden           Int            @default(0)    // Orden de visualización (ej: 0 es la imagen principal)
+
+  // Relación con Producto
+  producto        Producto       @relation(fields: [productoId], references: [id])
+
+  @@unique([productoId, orden]) // Evita que dos archivos tengan el mismo orden en el mismo producto
+}
+
 //Pedidos de Clientes
 model Pedido {
   id              Int            @id @default(autoincrement())
