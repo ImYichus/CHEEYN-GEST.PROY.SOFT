@@ -2,62 +2,55 @@
 
 'use client'; 
 
-import { useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation'; 
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react'; 
 
 // --- DATOS Y TIPOS ---
-const ALL_PRODUCTS = [
-  { id: 1, name: 'Vestido de Noche "Raspberry"', description: 'Elegante vestido largo en seda, color Raspberry Rose.', price: 149.99, imageUrl: 'https://picsum.photos/id/111/400/300', category: 'Vestidos' },
-  { id: 2, name: 'Aretes de Borgoña Clásico', description: 'Aretes en forma de lágrima, perfectos para la noche.', price: 29.99, imageUrl: 'https://picsum.photos/id/112/400/300', category: 'Accesorios' },
-  { id: 3, name: 'Sudadera "Chocolate Cosmos"', description: 'Sudadera cómoda de algodón orgánico, color Chocolate Cosmos.', price: 55.00, imageUrl: 'https://picsum.photos/id/113/400/300', category: 'Ropa Casual' },
-  { id: 4, name: 'Falda Plisada Vintage', description: 'Falda de corte A con pliegues, ideal para un look retro.', price: 69.00, imageUrl: 'https://picsum.photos/id/114/400/300', category: 'Faldas' },
-  { id: 5, name: 'Blusa de Lino Light Orange', description: 'Blusa ligera de lino, ideal para el verano, color Light Orange.', price: 45.00, imageUrl: 'https://picsum.photos/id/115/400/300', category: 'Blusas' },
-  { id: 6, name: 'Jeans Slim Fit Clásicos', description: 'Jeans duraderos con ajuste slim fit y acabado oscuro.', price: 79.99, imageUrl: 'https://picsum.photos/id/116/400/300', category: 'Pantalones' },
-  { id: 7, name: 'Chaqueta Denim Oversize', description: 'Chaqueta de mezclilla estilo oversize, un básico imprescindible.', price: 95.00, imageUrl: 'https://picsum.photos/id/117/400/300', category: 'Chaquetas' },
-  { id: 8, name: 'Zapatillas de Lona Blush', description: 'Zapatillas casuales de lona, color Blush suave.', price: 40.00, imageUrl: 'https://picsum.photos/id/118/400/300', category: 'Calzado' },
-  { id: 9, name: 'Pantalón Chino Borgoña', description: 'Pantalón chino cómodo, color borgoña intenso, para un look casual de oficina.', price: 59.50, imageUrl: 'https://picsum.photos/id/119/400/300', category: 'Pantalones' },
-  { id: 10, name: 'Maxi Vestido Floral', description: 'Vestido largo con estampado floral de verano.', price: 110.00, imageUrl: 'https://picsum.photos/id/120/400/300', category: 'Vestidos' },
-  { id: 11, name: 'Top de Tirantes Finos', description: 'Top básico de tirantes para usar debajo de chaquetas o solo.', price: 25.00, imageUrl: 'https://picsum.photos/id/121/400/300', category: 'Blusas' },
-  { id: 12, name: 'Bolso de Hombro Raspberry', description: 'Bolso pequeño de piel vegana, color Raspberry Rose.', price: 75.00, imageUrl: 'https://picsum.photos/id/122/400/300', category: 'Accesorios' },
-];
+
+interface Product {
+  id: number;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  imagenUrl: string;
+  categoria: { id: number; nombre: string };
+  enStock: boolean;
+}
 
 const CATEGORIES = ['Todos', 'Vestidos', 'Faldas', 'Pantalones', 'Blusas', 'Chaquetas', 'Calzado', 'Accesorios', 'Ropa Casual'];
 const PRODUCTS_PER_PAGE = 8; 
 
-interface ProductProps {
-  id: number;
-  name: string;
-  price: number;
-  imageUrl: string;
-}
 
-function ProductCard({ id, name, price, imageUrl }: ProductProps) {
+
+function ProductCard({ id, nombre, precio, imagenUrl }: Product) {
   return (
-    <Link href={`/product/${id}`} className="block h-full font-serif">
+    <Link href={`/products/${id}`} className="block h-full font-serif">
       {/* CLAVE: h-[350px] para una altura fija y uniforme */}
       <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-200 overflow-hidden group flex flex-col h-[350px]"> 
         
         {/* IMAGEN */}
         <div className="relative w-full h-40 flex-shrink-0">
-          <Image
-            src={imageUrl}
-            alt={name}
-            layout="fill"
-            objectFit="cover"
-            className="transition-transform duration-300 group-hover:scale-105"
-          />
+            {imagenUrl && (
+              <Image
+                src={imagenUrl}
+                alt={nombre}
+                layout="fill"
+                objectFit="cover"
+                className="transition-transform duration-300 group-hover:scale-105"
+              />
+            )}
         </div>
         
         {/* CONTENIDO */}
         <div className="p-3 text-center flex flex-col flex-grow justify-between">
           <h3 className="text-sm font-bold text-[#1e5128] mb-1 group-hover:text-[#4e9f3d] tracking-wider">
-            {name}
+            {nombre}
           </h3>
           <p className="text-lg font-extrabold text-[#4e9f3d] mt-1">
-            ${price.toFixed(2)}
+            ${precio.toFixed(2)}
           </p>
           <button className="mt-2 w-full py-1.5 px-3 bg-[#4e9f3d] text-white rounded-md hover:bg-[#3d8130] transition-colors duration-200 text-xs">
             Añadir
@@ -74,6 +67,8 @@ export default function ProductsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
   const [currentPage, setCurrentPage] = useState(
     parseInt(searchParams.get('page') || '1')
@@ -81,23 +76,23 @@ export default function ProductsPage() {
   const selectedCategory = searchParams.get('category') || 'Todos';
   
   const filteredProducts = useMemo(() => {
-    let result = ALL_PRODUCTS;
+    let result = products;
 
     if (selectedCategory !== 'Todos') {
-      result = result.filter(p => p.category === selectedCategory);
+      result = result.filter(p => p.categoria.nombre === selectedCategory);
     }
 
     if (searchTerm) {
       const lowerCaseSearch = searchTerm.toLowerCase();
       result = result.filter(
         p => 
-          p.name.toLowerCase().includes(lowerCaseSearch) || 
-          p.description.toLowerCase().includes(lowerCaseSearch)
+          p.nombre.toLowerCase().includes(lowerCaseSearch) || 
+          p.descripcion.toLowerCase().includes(lowerCaseSearch)
       );
     }
     
     return result;
-  }, [searchTerm, selectedCategory]);
+  }, [products, searchTerm, selectedCategory]);
 
   const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
   const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
@@ -131,6 +126,40 @@ export default function ProductsPage() {
     }
     router.push(`/products?${params.toString()}`, { scroll: false }); 
   };
+
+
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const res = await fetch('/api/products');
+        const data = await res.json();
+        const mappedProducts = data.map((p: any) => ({
+        id: p.id,
+        nombre: p.nombre,
+        descripcion: p.descripcion,
+        precio: Number(p.precio),
+        imagenUrl: p.multimediaProductos?.[0]?.url || '', // primera imagen
+        categoria: { id: p.categoria.id, nombre: p.categoria.nombre },
+        enStock: p.variantes.some((v: any) => v.stock > 0), // true si hay stock
+      }));
+        setProducts(data);
+      } catch (error) {
+        console.error('Error al cargar productos:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProducts();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen text-[#1e5128] text-2xl font-serif">
+        Cargando productos...
+      </div>
+    );
+  }
   
   return (
     <div className="min-h-screen bg-[#d8f3dc] flex flex-col font-serif">
