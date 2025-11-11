@@ -1,6 +1,9 @@
 generator client {
   provider = "prisma-client-js"
+<<<<<<< HEAD
   output   = "../app/generated/prisma"
+=======
+>>>>>>> 5d06b0262f83c936110fd1f9e34124d9fb2727a0
 }
 
 datasource db {
@@ -8,6 +11,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+<<<<<<< HEAD
+=======
+// ==========================================================
+// MODELOS DE LA BASE DE DATOS
+// ==========================================================
+
+//Usuarios (Clientes y Administradores)
+>>>>>>> 5d06b0262f83c936110fd1f9e34124d9fb2727a0
 model Usuario {
   id             Int        @id @default(autoincrement())
   nombre         String     @db.VarChar(255)
@@ -27,6 +38,7 @@ model Categoria {
 }
 
 model Producto {
+<<<<<<< HEAD
   id                  Int                  @id @default(autoincrement())
   nombre              String               @db.VarChar(255)
   descripcion         String?
@@ -36,9 +48,26 @@ model Producto {
   multimediaProductos MultimediaProducto[]
   categoria           Categoria            @relation(fields: [categoriaId], references: [id], onUpdate: NoAction)
   variantes           VarianteProducto[]
+=======
+  id              Int              @id @default(autoincrement())
+  nombre          String
+  descripcion     String?
+  precio          Decimal          @db.Decimal(65, 2) //Precio base
+  sku             String           @unique            //Stock Keeping Unit
+  imagenUrl       String?
+
+  //Clave Foránea a Categoria
+  categoriaId     Int
+  categoria       Categoria        @relation(fields: [categoriaId], references: [id])
+
+  //Relaciones
+  variantes       VarianteProducto[] //Una camiseta puede tener muchas variantes (talla S, color azul; talla M, color rojo, etc.)
+  multimedia      MultimediaProducto[]
+>>>>>>> 5d06b0262f83c936110fd1f9e34124d9fb2727a0
 }
 
 model VarianteProducto {
+<<<<<<< HEAD
   id          Int             @id @default(autoincrement())
   talla       String          @db.VarChar(50)
   color       String          @db.VarChar(50)
@@ -48,6 +77,21 @@ model VarianteProducto {
   itemsPedido DetallePedido[]
   producto    Producto        @relation(fields: [productoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
+=======
+  id              Int              @id @default(autoincrement())
+  talla           String
+  color           String
+  stock           Int              @default(0)
+
+  //Clave Foránea a Producto
+  productoId      Int
+  producto        Producto         @relation(fields: [productoId], references: [id])
+
+  //Relaciones
+  itemsPedido     DetallePedido[]
+
+  //Restricción única para asegurar que un producto no tenga dos veces la misma combinación de talla/color
+>>>>>>> 5d06b0262f83c936110fd1f9e34124d9fb2727a0
   @@unique([productoId, talla, color])
 }
 
@@ -94,4 +138,24 @@ enum EstadoPedido {
   ENVIADO
   ENTREGADO
   CANCELADO
+}
+
+// ==========================================================
+// ENUMERACIONES (ENUMS)
+// ==========================================================
+
+// Roles permitidos para los usuarios
+enum RolUsuario {
+  CLIENTE
+  ADMIN
+}
+
+// Estados posibles de un pedido
+enum EstadoPedido {
+  PENDIENTE    // Recibido, esperando confirmación/pago
+  PAGADO       // Pago confirmado
+  PROCESANDO   // En preparación
+  ENVIADO      // Entregado a la paquetería
+  ENTREGADO    // Confirmado por el cliente
+  CANCELADO    // Pedido cancelado
 }
