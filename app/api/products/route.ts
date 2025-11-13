@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@/app/generated/prisma';
+import { PrismaClient } from '@prisma/client';
 
 declare global {
   var prisma: PrismaClient | undefined;
@@ -13,8 +13,8 @@ export async function GET() {
     const productos = await prisma.producto.findMany({
       include: {
         categoria: true,
-        multimediaProductos: true,
-        variantes: true, // <-- incluir variantes
+        multimedia: true,
+        variantes: true,
       },
     });
 
@@ -22,12 +22,12 @@ export async function GET() {
     const productosJSON = productos.map((p) => ({
       ...p,
       precio: Number(p.precio),
-      enStock: p.variantes.some(v => v.inStock), // <-- true si alguna variante tiene stock
+      enStock: p.variantes.some((v) => v.inStock),
     }));
 
     return NextResponse.json(productosJSON);
   } catch (error) {
-    console.error(error);
+    console.error('Error al obtener productos:', error);
     return NextResponse.json(
       { error: 'Error al obtener los productos' },
       { status: 500 }

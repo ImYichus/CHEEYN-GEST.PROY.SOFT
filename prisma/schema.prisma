@@ -1,9 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-<<<<<<< HEAD
-  output   = "../app/generated/prisma"
-=======
->>>>>>> 5d06b0262f83c936110fd1f9e34124d9fb2727a0
 }
 
 datasource db {
@@ -11,19 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-<<<<<<< HEAD
-=======
-// ==========================================================
-// MODELOS DE LA BASE DE DATOS
-// ==========================================================
-
-//Usuarios (Clientes y Administradores)
->>>>>>> 5d06b0262f83c936110fd1f9e34124d9fb2727a0
 model Usuario {
   id             Int        @id @default(autoincrement())
-  nombre         String     @db.VarChar(255)
-  email          String     @unique @db.VarChar(255)
-  passwordHash   String     @db.VarChar(255)
+  nombre         String
+  email          String     @unique
+  passwordHash   String
   rol            RolUsuario @default(CLIENTE)
   direccionEnvio String?
   createdAt      DateTime   @default(now())
@@ -32,66 +20,34 @@ model Usuario {
 
 model Categoria {
   id          Int        @id @default(autoincrement())
-  nombre      String     @unique @db.VarChar(255)
+  nombre      String     @unique
   descripcion String?
   productos   Producto[]
 }
 
 model Producto {
-<<<<<<< HEAD
-  id                  Int                  @id @default(autoincrement())
-  nombre              String               @db.VarChar(255)
-  descripcion         String?
-  precio              Decimal              @db.Decimal(65, 2)
-  sku                 String               @unique @db.VarChar(255)
-  categoriaId         Int
-  multimediaProductos MultimediaProducto[]
-  categoria           Categoria            @relation(fields: [categoriaId], references: [id], onUpdate: NoAction)
-  variantes           VarianteProducto[]
-=======
   id              Int              @id @default(autoincrement())
   nombre          String
   descripcion     String?
-  precio          Decimal          @db.Decimal(65, 2) //Precio base
-  sku             String           @unique            //Stock Keeping Unit
+  precio          Decimal          @db.Decimal(65, 2)
+  sku             String           @unique
   imagenUrl       String?
-
-  //Clave Foránea a Categoria
   categoriaId     Int
   categoria       Categoria        @relation(fields: [categoriaId], references: [id])
-
-  //Relaciones
-  variantes       VarianteProducto[] //Una camiseta puede tener muchas variantes (talla S, color azul; talla M, color rojo, etc.)
+  variantes       VarianteProducto[]
   multimedia      MultimediaProducto[]
->>>>>>> 5d06b0262f83c936110fd1f9e34124d9fb2727a0
 }
 
 model VarianteProducto {
-<<<<<<< HEAD
-  id          Int             @id @default(autoincrement())
-  talla       String          @db.VarChar(50)
-  color       String          @db.VarChar(50)
-  stock       Int             @default(0)
-  inStock     Boolean
-  productoId  Int
-  itemsPedido DetallePedido[]
-  producto    Producto        @relation(fields: [productoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-=======
   id              Int              @id @default(autoincrement())
   talla           String
   color           String
   stock           Int              @default(0)
-
-  //Clave Foránea a Producto
+  inStock         Boolean          @default(true)
   productoId      Int
-  producto        Producto         @relation(fields: [productoId], references: [id])
-
-  //Relaciones
+  producto        Producto         @relation(fields: [productoId], references: [id], onDelete: Cascade)
   itemsPedido     DetallePedido[]
 
-  //Restricción única para asegurar que un producto no tenga dos veces la misma combinación de talla/color
->>>>>>> 5d06b0262f83c936110fd1f9e34124d9fb2727a0
   @@unique([productoId, talla, color])
 }
 
@@ -101,7 +57,7 @@ model MultimediaProducto {
   url        String
   esImagen   Boolean  @default(true)
   orden      Int      @default(0)
-  producto   Producto @relation(fields: [productoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  producto   Producto @relation(fields: [productoId], references: [id], onDelete: Cascade)
 
   @@unique([productoId, orden])
 }
@@ -114,7 +70,7 @@ model Pedido {
   direccionEnvio String
   usuarioId      Int
   detalles       DetallePedido[]
-  usuario        Usuario         @relation(fields: [usuarioId], references: [id], onUpdate: NoAction)
+  usuario        Usuario         @relation(fields: [usuarioId], references: [id])
 }
 
 model DetallePedido {
@@ -123,8 +79,8 @@ model DetallePedido {
   precioUnitario Decimal          @db.Decimal(65, 2)
   pedidoId       Int
   varianteId     Int
-  pedido         Pedido           @relation(fields: [pedidoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  variante       VarianteProducto @relation(fields: [varianteId], references: [id], onUpdate: NoAction)
+  pedido         Pedido           @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  variante       VarianteProducto @relation(fields: [varianteId], references: [id])
 }
 
 enum RolUsuario {
@@ -135,27 +91,8 @@ enum RolUsuario {
 enum EstadoPedido {
   PENDIENTE
   PAGADO
+  PROCESANDO
   ENVIADO
   ENTREGADO
   CANCELADO
-}
-
-// ==========================================================
-// ENUMERACIONES (ENUMS)
-// ==========================================================
-
-// Roles permitidos para los usuarios
-enum RolUsuario {
-  CLIENTE
-  ADMIN
-}
-
-// Estados posibles de un pedido
-enum EstadoPedido {
-  PENDIENTE    // Recibido, esperando confirmación/pago
-  PAGADO       // Pago confirmado
-  PROCESANDO   // En preparación
-  ENVIADO      // Entregado a la paquetería
-  ENTREGADO    // Confirmado por el cliente
-  CANCELADO    // Pedido cancelado
 }

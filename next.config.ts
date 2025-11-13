@@ -3,16 +3,22 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // AÑADE ESTE BLOQUE DE CÓDIGO AQUÍ
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'picsum.photos', 
       },
+      {
+        protocol: 'https',
+        hostname: 'i5.walmartimages.com.mx',
+      },
+      {
+        protocol: 'https',
+        hostname: 'th.bing.com',
+      },
     ],
   },
-  // FIN DEL BLOQUE AÑADIDO
   
   /* config options here */
 };

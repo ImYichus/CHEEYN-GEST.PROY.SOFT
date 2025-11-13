@@ -135,15 +135,15 @@ export default function ProductsPage() {
         const res = await fetch('/api/products');
         const data = await res.json();
         const mappedProducts = data.map((p: any) => ({
-        id: p.id,
-        nombre: p.nombre,
-        descripcion: p.descripcion,
-        precio: Number(p.precio),
-        imagenUrl: p.multimediaProductos?.[0]?.url || '', // primera imagen
-        categoria: { id: p.categoria.id, nombre: p.categoria.nombre },
-        enStock: p.variantes.some((v: any) => v.stock > 0), // true si hay stock
-      }));
-        setProducts(data);
+          id: p.id,
+          nombre: p.nombre,
+          descripcion: p.descripcion,
+          precio: Number(p.precio),
+          imagenUrl: p.multimedia?.[0]?.url || p.imagenUrl || 'https://picsum.photos/400/300', // primera imagen de multimedia o imagenUrl
+          categoria: { id: p.categoria.id, nombre: p.categoria.nombre },
+          enStock: p.enStock,
+        }));
+        setProducts(mappedProducts);
       } catch (error) {
         console.error('Error al cargar productos:', error);
       } finally {
